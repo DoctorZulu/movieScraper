@@ -44,13 +44,24 @@ var options = {
 };
 request(options, function () {
   request(
-    "https://www.google.com/search?q=godzilla+vs+kong+movie+review",
+    "https://www.google.com/search?q=cruella+movie+review",
     function (error, response, body) {
       var $ = cheerio.load(body);
       $("div").each(function () {
         var link = $(this);
         var text = link.text();
-        console.log(text);
+        let movie;
+
+        /* console.log(text.match(/^Rating/)); */
+        if (
+          text.startsWith("Rating") &&
+          text.includes(")") &&
+          text.includes("/")
+        ) {
+          console.log(text);
+          movie = text;
+          return;
+        }
       });
     }
   );
